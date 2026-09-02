@@ -1,25 +1,26 @@
-import sqlite3
+import os
+import psycopg2
 
 
-connection = sqlite3.connect("foodconnect.db")
-
-cursor = connection.cursor()
-
-
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS donations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    hotel TEXT NOT NULL,
-    food TEXT NOT NULL,
-    quantity TEXT NOT NULL,
-    location TEXT NOT NULL,
-    contact TEXT NOT NULL
-)
-""")
+def get_connection():
+    return psycopg2.connect(os.getenv("DATABASE_URL"))
 
 
-connection.commit()
+def create_table():
+    connection = get_connection()
+    cursor = connection.cursor()
 
-connection.close()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS donations (
+            id SERIAL PRIMARY KEY,
+            hotel TEXT NOT NULL,
+            food TEXT NOT NULL,
+            quantity TEXT NOT NULL,
+            location TEXT NOT NULL,
+            contact TEXT NOT NULL
+        )
+    """)
 
-print("FoodConnect database created successfully!")
+    connection.commit()
+    cursor.close()
+    connection.close()
