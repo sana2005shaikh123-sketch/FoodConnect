@@ -10,7 +10,7 @@ from database import get_connection, create_table
 app = Flask(__name__, template_folder="templates_new")
 
 # Flask secret key
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "foodconnect-secret-key")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 # Gemini AI
 apikey = os.getenv("GEMINI_API_KEY")
