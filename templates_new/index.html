@@ -1,0 +1,337 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodConnect - Food Waste Management</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <h2>🍱 FoodConnect</h2>
+
+        <div>
+            <a href="#home">Home</a>
+            <a href="#donate">Donate Food</a>
+            <a href="#map">Find Orphanage</a>
+            <a href="#about">About</a>
+            <a href="/dashboard">📊 Admin Dashboard</a>
+        </div>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <div class="hero-content">
+
+            <h1>Don't Waste Food. Share It. 🍱</h1>
+
+            <p>
+                A smart food waste management system that connects
+                hotels with nearby orphanages to donate safe and
+                edible leftover food.
+            </p>
+
+            <a href="#donate" class="btn">
+                Donate Leftover Food
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- Donation Section -->
+    <section id="donate">
+
+        <h2>🍱 Hotel Food Donation</h2>
+
+        <p class="section-text">
+            Hotels can register their safe and edible leftover food.
+            Instead of throwing food away, hotels can contact nearby
+            orphanages and arrange a food donation.
+        </p>
+
+
+        <div class="donation-container">
+
+            <form action="/donate" method="POST">
+
+                <div class="form-group">
+                    <label for="hotel">Hotel Name</label>
+
+                    <input
+                        type="text"
+                        id="hotel"
+                        name="hotel"
+                        placeholder="Enter hotel name"
+                        required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="food">Food Available</label>
+
+                    <input
+                        type="text"
+                        id="food"
+                        name="food"
+                        placeholder="Example: Rice, Dal, Vegetables"
+                        required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+
+                    <input
+                        type="text"
+                        id="quantity"
+                        name="quantity"
+                        placeholder="Example: 20 meals"
+                        required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="location">Hotel Location</label>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="Example: Andheri, Mumbai"
+                        required>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="contact">Contact Number</label>
+
+                    <input
+                        type="tel"
+                        id="contact"
+                        name="contact"
+                        placeholder="Enter contact number"
+                        required>
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    🍱 Submit Food Donation
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- Map Section -->
+    <section id="map">
+
+    <h2>📍 Find Nearby Orphanages</h2>
+
+    <p class="section-text">
+        Enter the hotel location to find nearby orphanages
+        where safe and edible leftover food can be donated.
+    </p>
+
+    <div class="donation-container">
+
+        <div class="form-group">
+            <label for="mapLocation">Hotel Location</label>
+
+            <input
+                type="text"
+                id="mapLocation"
+                placeholder="Example: Andheri, Mumbai">
+        </div>
+
+        <button
+            type="button"
+            class="submit-btn"
+            onclick="findOrphanages()">
+            📍 Find Nearby Orphanages
+        </button>
+
+    </div>
+
+    <br>
+
+    <div class="map-container">
+
+        <iframe
+            id="orphanageMap"
+            src="https://www.google.com/maps?q=orphanages+near+Mumbai&output=embed"
+            loading="lazy">
+        </iframe>
+
+    </div> 
+    <div class="donation-container">
+
+    <h3 style="color: #1b5e20; text-align: center;">
+        🤝 Ready to Donate?
+    </h3>
+
+    <p class="section-text">
+        After finding a nearby orphanage, contact them to confirm
+        that they can accept the food. Once confirmed, arrange
+        safe pickup or delivery of the donated food.
+    </p>
+
+    <button
+        type="button"
+        class="submit-btn"
+        onclick="donationReady()">
+        🤝 Donation Ready
+    </button>
+
+</div>
+
+</section>
+
+
+<script>
+
+function findOrphanages() {
+
+    let location = document.getElementById("mapLocation").value;
+
+    if (location.trim() === "") {
+
+        alert("Please enter a location first.");
+
+        return;
+    }
+
+    let search =
+        "orphanages near " + location;
+
+    let mapURL =
+        "https://www.google.com/maps?q="
+        + encodeURIComponent(search)
+        + "&output=embed";
+
+    document.getElementById("orphanageMap").src = mapURL;
+
+}
+function donationReady() {
+
+    alert(
+        "Great! Please contact the selected orphanage " +
+        "and confirm food acceptance before arranging pickup or delivery."
+    );
+
+}
+</script>
+
+
+    <!-- How FoodConnect Works -->
+    <section>
+
+        <h2>How FoodConnect Works</h2>
+
+
+        <div class="steps">
+
+
+            <div class="step">
+
+                <div class="step-icon">🏨</div>
+
+                <h3>1. Hotel Has Leftover Food</h3>
+
+                <p>
+                    The hotel identifies safe and edible leftover
+                    food that can be donated.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-icon">📍</div>
+
+                <h3>2. Find Nearby Orphanage</h3>
+
+                <p>
+                    The hotel uses Google Maps to locate
+                    nearby orphanages.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-icon">📞</div>
+
+                <h3>3. Contact Orphanage</h3>
+
+                <p>
+                    The hotel contacts the orphanage and
+                    coordinates the food donation.
+                </p>
+
+            </div>
+
+
+            <div class="step">
+
+                <div class="step-icon">🤝</div>
+
+                <h3>4. Food Is Donated</h3>
+
+                <p>
+                    Safe leftover food reaches people who need
+                    it instead of becoming waste.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- About Section -->
+    <section class="about" id="about">
+
+        <h2>🍱 About FoodConnect</h2>
+
+        <p>
+            FoodConnect is a food waste management platform designed
+            to reduce food wastage by connecting hotels with nearby
+            orphanages. The platform helps hotels donate safe and
+            edible leftover food instead of throwing it away.
+        </p>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <h3>🍱 FoodConnect</h3>
+
+        <p>Turning leftover food into hope.</p>
+
+        <p>© 2026 FoodConnect</p>
+
+    </footer>
+
+
+</body>
+</html>
